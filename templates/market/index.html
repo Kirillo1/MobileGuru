@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Page Title</title>
-    <link rel="stylesheet" href="path/to/your/styles.css"> <!-- Подключение ваших стилей -->
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
 </head>
 <body>
     <header>
@@ -24,6 +25,13 @@
             <h2>Section 1</h2>
             <p>This is the content of section 1.</p>
         </section>
+        {% for smartphone in smartphones %}
+        <section>
+            <h2>Smartphone: {{ smartphone.brand }} {{ smartphone.model }}</h2>
+            <p>Display Size: {{ smartphone.display_size }}</p>
+            <p>Storage Capacity: {{ smartphone.storage_capacity }}</p>
+        </section>
+        {% endfor %}
 
         <section>
             <h2>Section 2</h2>

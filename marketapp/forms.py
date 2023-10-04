@@ -38,8 +38,7 @@ class SmartPhoneForm(forms.ModelForm):
         required=True
     )
 
-    description = forms.Textarea(
-    )
+    description = forms.Textarea()
 
     price = forms.DecimalField(
         label='Цена',
@@ -52,17 +51,12 @@ class SmartPhoneForm(forms.ModelForm):
         fields = ('brand', 'model', 'display_size', 'storage_capacity', 'processor', 
                   'battery_capacity', 'description', 'price')
 
-# from django import forms
-# from .models import SmartPhone
+class SmartPhoneImagesForm(forms.ModelForm):
+    # images = forms.ImageField(
+    # widget=forms.ImageField(attrs={'multiple': True, 'images': 'image[]'}),
+    # required=False
+    # )
 
-# class SmartPhoneForm(forms.ModelForm):
-#     class Meta:
-#         model = SmartPhone
-#         fields = ('brand', 'model', 'display_size', 'storage_capacity', 'processor', 
-#                   'battery_capacity', 'description', 'price', 'image')
-
-#     image = forms.ImageField(
-#         label='Изображение',
-#         required=False,
-#         widget=forms.ClearableFileInput(attrs={'multiple': True}),
-#     )
+    class Meta:
+        model = FulfilledSmartPhoneImages
+        fields = ('image',)
