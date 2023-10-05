@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block lists %}
+  Главная страница
+{% endblock %}
+{% block content %}
+  <main>
+    <h2>Добавить смартфон</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <h3>Добавить изображения смартфона</h3>
+      {{ images_form.image }}
+      <button type="submit">Сохранить</button>
+    </form>
+
+    <section>
+      <h2>Section 2</h2>
+      <p>This is the content of section 2.</p>
+    </section>
+  </main>
+
+  <link rel="stylesheet" href="{% static 'css/create_phone.css' %}" />
+{% endblock %}
