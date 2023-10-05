@@ -1,24 +1,7 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
-    <link rel="stylesheet" href="{% static 'css/detail_phone.css' %}">
-</head>
-<body>
-    <header>
-        <h1>Your Website Header</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+{% block lists %} Детальная страница {% endblock %}
+{% block content %}
     
     <main>
         <section>
@@ -33,8 +16,6 @@
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2023 Your Website Footer</p>
-    </footer>
-</body>
-</html>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/detail_phone.css' %}">
+    {% endblock %}
+
