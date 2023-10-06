@@ -49,13 +49,9 @@ class SmartPhoneForm(forms.ModelForm):
     class Meta:
         model = SmartPhone
         fields = ('brand', 'model', 'display_size', 'storage_capacity', 'processor', 
-                  'battery_capacity', 'description', 'price')
+                  'battery_capacity', 'description', 'price', 'main_image')
 
 class SmartPhoneImagesForm(forms.ModelForm):
-    # images = forms.ImageField(
-    # widget=forms.ImageField(attrs={'multiple': True, 'images': 'image[]'}),
-    # required=False
-    # )
 
     class Meta:
         model = FulfilledSmartPhoneImages

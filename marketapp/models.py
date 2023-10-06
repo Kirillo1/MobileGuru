@@ -62,6 +62,12 @@ class SmartPhone(models.Model):
         max_length=20, choices=STATUS_CHOICES, 
         default='Pending'
         )
+    main_image = models.ImageField(
+        'Главное фото',
+        upload_to='images',
+        null=True,
+        blank=True
+    )
     
     price = models.DecimalField(
         'Цена', max_digits=10, decimal_places=2

@@ -5,10 +5,8 @@ from .forms import SmartPhoneForm, SmartPhoneImagesForm
 
 def view_index(request):
     smartphones = SmartPhone.objects.all()
-    images = FulfilledSmartPhoneImages.objects.all()
     context = {
         'smartphones': smartphones,
-        'images': images
         }
     return render(request, 'market/index.html', context)
 

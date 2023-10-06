@@ -10,9 +10,11 @@
       <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
         {% for smartphone in smartphones %}
           <div class="col">
-            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('#');">
+            <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('/media/{{ smartphone.main_image }}');">
               <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Short title, long jacket</h3>
+                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ smartphone.brand }}</h3>
+                <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ smartphone.model }}</h3>
+
                 <ul class="d-flex list-unstyled mt-auto">
                   <li class="d-flex align-items-center me-3">
                     <svg class="bi me-2" width="1em" height="1em">
@@ -33,11 +35,6 @@
         {% endfor %}
       </div>
     </div>
-
-    <section>
-      <h2>Section 2</h2>
-      <p>This is the content of section 2.</p>
-    </section>
   </main>
   <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
 {% endblock %}
