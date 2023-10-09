@@ -1,32 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block lists %} Детальная страница {% endblock %}
+{% block lists %}
+  Детальная страница
+{% endblock %}
 {% block content %}
-    
-    <main>
+  <main>
+    <section>
+      <h2>Детальная информация о смартфоне</h2>
+      <div>
+        <h3>Бренд: {{ smartphone.brand }}</h3>
+        <h3>Модель: {{ smartphone.model }}</h3>
+        <h3>Размер экрана: {{ smartphone.display_size }}</h3>
+        <h3>Объем встроенной памяти: {{ smartphone.storage_capacity }}</h3>
+        <h3>Процессор: {{ smartphone.processor }}</h3>
+        <h3>Объем батареи: {{ smartphone.battery_capacity }}</h3>
+        <h3>Описание, характеристики: {{ smartphone.description }}</h3>
+        <h3>Дата добавления: {{ smartphone.created_at }}</h3>
+        <h3>Статус: {{ smartphone.status }}</h3>
+        <h3>Цена: {{ smartphone.price }}</h3>
+      </div>
+    </section>
 
-        <section>
-            <h2>Детальная информация о смартфоне</h2>
-            <div>
-              <h3>Бренд: {{ smartphone.brand }}</h3>
-              <h3>Модель: {{ smartphone.model }}</h3>
-              <h3>Размер экрана: {{ smartphone.display_size }}</h3>
-              <h3>Объем встроенной памяти: {{ smartphone.storage_capacity }}</h3>
-              <h3>Процессор: {{ smartphone.processor }}</h3>
-              <h3>Объем батареи: {{ smartphone.battery_capacity }}</h3>
-              <h3>Описание, характеристики: {{ smartphone.description }}</h3>
-              <h3>Дата добавления: {{ smartphone.created_at }}</h3>
-              <h3>Статус: {{ smartphone.status }}</h3>
-              <h3>Цена: {{ smartphone.price }}</h3>
-            </div>
-          </section>
+    {% for image in smartphone.images.all %}
+      <img src="{{ image.images.url }}" alt="Фото смартфона" style="width: 300px;" />
+    {% endfor %}
+  </main>
 
-        {% for image in smartphone.images.all %}
-        <img src="{{ image.image.url }}" alt="Фото смартфона">
-      {% endfor %}
-
-    </main>
-
-    <link rel="stylesheet" type="text/css" href="{% static 'css/detail_phone.css' %}">
-    {% endblock %}
-
+  <link rel="stylesheet" type="text/css" href="{% static 'css/detail_phone.css' %}" />
+{% endblock %}
