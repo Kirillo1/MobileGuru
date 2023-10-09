@@ -1,5 +1,3 @@
-import datetime
-
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -30,7 +28,9 @@ class SmartPhone(models.Model):
         )
 
     likes = models.ManyToManyField(
-        User, related_name="likes"
+        User, related_name="likes",
+        blank=True,
+        null=True
         )
 
     seller = models.ForeignKey(
@@ -64,7 +64,7 @@ class SmartPhone(models.Model):
         )
     main_image = models.ImageField(
         'Главное фото',
-        upload_to='images',
+        upload_to='main_img/',
         null=True,
         blank=True
     )
@@ -86,20 +86,12 @@ class FulfilledSmartPhoneImages(models.Model):
         on_delete=models.CASCADE,
         related_name='images',
         verbose_name='Смартфон',
-        blank=True,
-        null=True
     )
 
-    image = models.ImageField(
-        upload_to='FulfilledSmartPhoneImages.get_image_path',
-        blank=True,
-        null=True
+    images = models.ImageField(
+        upload_to='SmartPhoneImages',
     )
-
-    @staticmethod
-    def get_image_path(instance, filename):
-        return f'fulfilled_smartphones/{instance.smartphone.id}/{filename}'
-
+ 
     def __str__(self):
         return f'Фото к смартфону {self.smartphone.model}'
 

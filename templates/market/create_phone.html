@@ -10,7 +10,8 @@
       {% csrf_token %}
       {{ form.as_p }}
       <h3>Добавить изображения смартфона</h3>
-      {{ images_form.image }}
+      <input required name="main_image" type="file">
+      <input required name="images" type="file" multiple>
       <button type="submit">Сохранить</button>
     </form>
   </main>

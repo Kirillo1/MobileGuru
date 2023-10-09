@@ -49,10 +49,5 @@ class SmartPhoneForm(forms.ModelForm):
     class Meta:
         model = SmartPhone
         fields = ('brand', 'model', 'display_size', 'storage_capacity', 'processor', 
-                  'battery_capacity', 'description', 'price', 'main_image')
+                  'battery_capacity', 'description', 'price')
 
-class SmartPhoneImagesForm(forms.ModelForm):
-
-    class Meta:
-        model = FulfilledSmartPhoneImages
-        fields = ('image',)
