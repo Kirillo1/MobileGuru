@@ -28,9 +28,7 @@ class SmartPhone(models.Model):
         )
 
     likes = models.ManyToManyField(
-        User, related_name="likes",
-        blank=True,
-        null=True
+        User, related_name="likes"
         )
 
     seller = models.ForeignKey(
