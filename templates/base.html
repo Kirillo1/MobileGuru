@@ -15,9 +15,12 @@
         <div>
           <h3 class="float-md-start mb-0"><a style="color: white;" href="{% url 'market:index' %}">MobileGuru</a></h3>
           <nav class="nav nav-masthead justify-content-center float-md-end">
+            <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:profile' %}">Привет, {{ user }}</a>
+            <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:logout' %}">Зарегистрироваться</a>
+            <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:login' %}">Войти</a>
             <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="{% url 'market:index' %}">Главная</a>
             <a class="nav-link fw-bold py-1 px-0" href="{% url 'market:create_smartphone' %}">Добавить новый смартфон</a>
-            <a class="nav-link fw-bold py-1 px-0" href="#">Contact</a>
+            <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:logout' %}">Выход</a>
           </nav>
         </div>
       </header>
