@@ -56,5 +56,5 @@ def view_logout(request:HttpRequest) -> HttpResponse:
     return HttpResponseRedirect(reverse('market:index'))
 
 
-# def view_agreement(request:HttpRequest) -> HttpResponse:
-#     return render(request, 'users/agreement.html')
+def register_user(request:HttpRequest) -> HttpResponse:
+    return render(request, 'users/registration.html')
