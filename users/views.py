@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
-from .forms import UserProfileForm, UserLoginForm, AvatarUserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
+from .forms import UserProfileForm, UserLoginForm, AvatarUserForm, UserRegistrationForm
 
 
 def view_login(request: HttpRequest) -> HttpResponse:
@@ -56,5 +56,17 @@ def view_logout(request:HttpRequest) -> HttpResponse:
     return HttpResponseRedirect(reverse('market:index'))
 
 
-def register_user(request:HttpRequest) -> HttpResponse:
-    return render(request, 'users/registration.html')
+def register_user(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('market:index')
+        else:
+            for field, errors in form.errors.items():
+                print(f"Field: {field}, Errors: {', '.join(errors)}")
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'users/registration.html', {'form': form})
+

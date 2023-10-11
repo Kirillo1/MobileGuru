@@ -46,3 +46,26 @@ class AvatarUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('image',)
+
+
+class UserRegistrationForm(forms.ModelForm):
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+    confirm_password = forms.CharField(label='Подтвердите пароль', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('username', 'phone_number', 'email', 'first_name', 'last_name', 'father_name', 'company_name', 'image')
+
+    def clean_confirm_password(self):
+        password = self.cleaned_data.get('password')
+        confirm_password = self.cleaned_data.get('confirm_password')
+        if password != confirm_password:
+            raise forms.ValidationError('Пароли не совпадают')
+        return confirm_password
+
+    def save(self, commit=True):
+        user = super(UserRegistrationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
