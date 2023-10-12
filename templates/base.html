@@ -13,7 +13,7 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
       <header>
         <div>
-          <h3 class="float-md-start mb-0"><a style="color: white;" href="{% url 'market:index' %}">MobileGuru</a></h3>
+          <h2 class="float-md-start mb-0"><a style="color: #FFA500;" href="{% url 'market:index' %}">MobileGuru</a></h2>
           <nav class="nav nav-masthead justify-content-center float-md-end">
             <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:profile' %}">Привет, {{ user }}</a>
             <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:register_user' %}">Зарегистрироваться</a>
@@ -31,8 +31,7 @@
         {% endblock %}
       </div>
 
-      <div class="container">
-        <footer class="py-5 my-5">
+        <footer class="">
           <ul class="nav justify-content-center border-bottom">
             <li class="nav-item">
               <a href="{% url 'market:index' %}" class="nav-link px-2 text-body-secondary">Главная</a>
@@ -50,9 +49,8 @@
               <a href="#" class="nav-link px-2 text-body-secondary">About</a>
             </li>
           </ul>
-          <p class="text-center text-body-secondary">&copy; 2023 Company, Inc</p>
+          <p class="text-center text-body-secondary">&copy; 2023 MobileGuru Company, Inc</p>
         </footer>
-      </div>
     </div>
   </body>
 </html>
