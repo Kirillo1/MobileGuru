@@ -50,4 +50,16 @@ class SmartPhoneForm(forms.ModelForm):
         model = SmartPhone
         fields = ('brand', 'model', 'display_size', 'storage_capacity', 'processor', 
                   'battery_capacity', 'description', 'price')
+        
+    def __init__(self, *args, **kwargs):
+        super(SmartPhoneForm, self).__init__(*args, **kwargs)
+
+        self.fields['brand'].widget.attrs['class'] = 'form-control'
+        self.fields['model'].widget.attrs['class'] = 'form-control'
+        self.fields['display_size'].widget.attrs['class'] = 'form-control'
+        self.fields['storage_capacity'].widget.attrs['class'] = 'form-control'
+        self.fields['processor'].widget.attrs['class'] = 'form-control'
+        self.fields['battery_capacity'].widget.attrs['class'] = 'form-control'
+        self.fields['description'].widget.attrs['class'] = 'form-control'
+        self.fields['price'].widget.attrs['class'] = 'form-control'
 
