@@ -4,21 +4,68 @@
   Главная страница
 {% endblock %}
 {% block content %}
-  <main>
-    <h2>Добавить смартфон</h2>
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <h3>Добавить изображения смартфона</h3>
-      {{ images_form.image }}
-      <button type="submit">Сохранить</button>
-    </form>
+  <div class="container">
+    <main>
+      <div class="py-5 text-center">
+      <h2>Добавить смартфон</h2>
+      </div>
+      <hr class="my-4" />
+      <form method="post" enctype="multipart/form-data">        
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label for="{{ form.brand.id_for_label }}" class="form-label">Бренд</label>
+            {{ form.brand }}
+          </div>
+          <div class="col-md-4">
+            <label for="{{ form.model.id_for_label }}" class="form-label">Модель</label>
+            {{ form.model }}
+          </div>
+          <div class="col-md-4">
+            <label for="{{ form.display_size.id_for_label }}" class="form-label">Размер экрана</label>
+            {{ form.display_size }}
+          </div>
+          <div class="col-md-6">
+            <label for="{{ form.storage_capacity.id_for_label }}" class="form-label">Объем памяти</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text">@</span>
+              {{ form.storage_capacity }}
+              <div class="invalid-feedback">Your username is required.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="{{ form.price.id_for_label }}" class="form-label">Цена</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text">you@example.com</span>
+              {{ form.price }}
+              <div class="invalid-feedback">Your username is required.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="{{ form.processor.id_for_label }}" class="form-label">Процессор</label>
+            {{ form.processor }}
+          </div>
+          <div class="col-md-6">
+            <label for="{{ form.battery_capacity.id_for_label }}" class="form-label">Объем батареи</label>
+            {{ form.battery_capacity }}
+          </div>
+          <div class="col-12">
+            <label for="{{ form.description.id_for_label }}" class="form-label">Описание/дополнительные характеристики</label>
+            {{ form.description }}
+          </div>
 
-    <section>
-      <h2>Section 2</h2>
-      <p>This is the content of section 2.</p>
-    </section>
-  </main>
+          <div class="col-md-6">
+            <input required class="form-label" name="main_image" type="file">
+          </div>
+          <div class="col-md-6">
+            <input required class="form-label" name="images" type="file" multiple>
+          </div>
+        <hr class="my-4" />
+        <button class="w-100 btn btn-lg" type="submit">Сохранить</button>
+      </form>
+    </main>
+  </div>
 
   <link rel="stylesheet" href="{% static 'css/create_phone.css' %}" />
 {% endblock %}

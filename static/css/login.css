@@ -1,10 +1,12 @@
-.input-group-text, 
+.form-signin {
+  max-width: 400px;
+  padding: 1rem;
+  height: 100%;
+}
+ 
 .form-control, .btn {
     border: 1px solid white !important;
     background-color: #343a40;
     color: white;
-}
-.btn {
-    margin-bottom: 100px;
-}
-  
+} 
+
