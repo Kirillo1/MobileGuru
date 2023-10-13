@@ -1,0 +1,10 @@
+.input-group-text, 
+.form-control, .btn {
+    border: 1px solid white !important;
+    background-color: #343a40;
+    color: white;
+}
+.btn {
+    margin-bottom: 100px;
+}
+  
