@@ -15,12 +15,16 @@
         <div>
           <h2 class="float-md-start mb-0"><a style="color: #FFA500;" href="{% url 'market:index' %}">MobileGuru</a></h2>
           <nav class="nav nav-masthead justify-content-center float-md-end">
-            <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:profile' %}">Привет, {{ user }}</a>
-            <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:register_user' %}">Зарегистрироваться</a>
-            <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:login' %}">Войти</a>
             <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="{% url 'market:index' %}">Главная</a>
+
+            {% if user.is_authenticated %}
+            <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:profile' %}">Привет, {{ user.first_name }}!</a>
             <a class="nav-link fw-bold py-1 px-0" href="{% url 'market:create_smartphone' %}">Добавить новый смартфон</a>
             <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:logout' %}">Выход</a>
+            {% else %}
+            <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:register_user' %}">Зарегистрироваться</a>
+            <a class="nav-link fw-bold py-1 px-0" href="{% url 'users:login' %}">Войти</a>
+            {% endif %}
           </nav>
         </div>
       </header>
@@ -30,7 +34,7 @@
 
         {% endblock %}
       </div>
-        <footer>
+        {% comment %} <footer>
           <ul class="nav justify-content-center border-bottom">
             <li class="nav-item">
               <a href="{% url 'market:index' %}" class="nav-link px-2 text-body-secondary">Главная</a>
@@ -49,7 +53,7 @@
             </li>
           </ul>
           <p class="text-center text-body-secondary">&copy; 2023 MobileGuru Company, Inc</p>
-        </footer>
+        </footer> {% endcomment %}
     </div>
   </body>
 </html>

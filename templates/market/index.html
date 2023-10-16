@@ -6,7 +6,7 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
     <div class="container px-4 py-5" id="custom-cards">
-      <h2 class="pb-2 border-bottom">Custom cards</h2>
+      <h2 class="pb-2 border-bottom">Смартфоны {{ smartphones.count }} товаров</h2>
       <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
         {% for smartphone in smartphones %}
         <a href="{% url 'market:detail_phone' smartphone.pk %}">
@@ -36,5 +36,11 @@
         </a>
         {% endfor %}
       </div>
+      <hr class="my-4" />
+
+      {% comment %} <h2 class="pb-2 border-bottom">Всего {{ users.count }} компаний</h2>
+      <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+       
+      </div> {% endcomment %}
     </div>
 {% endblock %}

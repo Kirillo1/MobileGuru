@@ -4,27 +4,51 @@
   Детальная страница
 {% endblock %}
 {% block content %}
-  <main>
-    <section>
-      <h2>Детальная информация о смартфоне</h2>
-      <div>
-        <h3>Бренд: {{ smartphone.brand }}</h3>
-        <h3>Модель: {{ smartphone.model }}</h3>
-        <h3>Размер экрана: {{ smartphone.display_size }}</h3>
-        <h3>Объем встроенной памяти: {{ smartphone.storage_capacity }}</h3>
-        <h3>Процессор: {{ smartphone.processor }}</h3>
-        <h3>Объем батареи: {{ smartphone.battery_capacity }}</h3>
-        <h3>Описание, характеристики: {{ smartphone.description }}</h3>
-        <h3>Дата добавления: {{ smartphone.created_at }}</h3>
-        <h3>Статус: {{ smartphone.status }}</h3>
-        <h3>Цена: {{ smartphone.price }}</h3>
-      </div>
-    </section>
 
-    {% for image in smartphone.images.all %}
-      <img src="{{ image.images.url }}" alt="Фото смартфона" style="width: 300px;" />
-    {% endfor %}
-  </main>
+<main>
+  <h1 class="text-body-emphasis">{{ smartphone.brand }} {{ smartphone.model }}</h1>
+  <p class="fs-5 W-80">Quickly and easily get started with Bootstrap's compiled, production-ready files with this barebones example featuring some basic HTML and helpful links. Download all our examples to get started.</p>
+  {% for image in smartphone.images.all %}
+  <img src="{{ image.images.url }}" alt="Фото смартфона" style="width: 300px;" />
+{% endfor %}
+<h3 class="text-end">{{ smartphone.price|floatformat:0 }}</h3>
+  <hr class="my-4" />
+  <div class="row g-5">
+    <div class="col-md-6">
+      <h2 class="text-body-emphasis">Характеристики</h2>
+      <div class="text-start">
+      <p>Бренд: {{ smartphone.brand }}</p>
+      <p>Модель: {{ smartphone.model }}</p>
+      <p>Размер экрана: {{ smartphone.display_size }}</p>
+      <p>Объем встроенной памяти: {{ smartphone.storage_capacity }}</p>
+      <p>Процессор: {{ smartphone.processor }}</p>
+      <p>Объем батареи: {{ smartphone.battery_capacity }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <h2 class="text-body-emphasis">Описание</h2>
+      <p class="text-start">{{ smartphone.description }}</p>
+      <h6 class="text-end">Дата добавления: {{ smartphone.created_at }}</h6>      
+    </div>
+  </div>
+  <div class="mb-4 mt-3">
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 mb-3 mb-sm-0">
+      <p>Оценка: </p>
+    </div>
+    <div class="col-sm-6">
+      <a href="#" class="btn btn-primary btn-lg px-4 text-end">Купить</a>
+    </div>
+  </div>
+  <a href="{% url 'market:smartphone_delete' smartphone.pk %}">Delete</a>
+  
+  <a href="{% url 'market:smartphone_edit' smartphone.pk %}">Edit</a>
+
+
+</main>
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/detail_phone.css' %}" />
 {% endblock %}
