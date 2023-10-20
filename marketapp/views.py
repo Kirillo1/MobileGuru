@@ -2,12 +2,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from .models import SmartPhone, FulfilledSmartPhoneImages
+from users.models import User
 from .forms import SmartPhoneForm, SmartPhoneEditForm
 
 def view_index(request):
     smartphones = SmartPhone.objects.all()
+    all_users = User.objects.filter(is_staff=False)
     context = {
         'smartphones': smartphones,
+        'all_users': all_users
         }
     return render(request, 'market/index.html', context)
 
