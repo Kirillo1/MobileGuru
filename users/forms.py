@@ -51,6 +51,7 @@ class AvatarUserForm(forms.ModelForm):
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
     confirm_password = forms.CharField(label='Подтвердите пароль', widget=forms.PasswordInput)
+    image = forms.ImageField(label='Ваш лого', required=False)
 
     class Meta:
         model = User

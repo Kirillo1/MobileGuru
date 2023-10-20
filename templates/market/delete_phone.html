@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block lists %}
+  Детальная страница
+{% endblock %}
+{% block content %}
+
+<main>
+  <div class="card-dark position-absolute top-50 start-50 translate-middle">
+    <div class="card-body">
+      <h1>Подтверждение удаления смартфона</h1>
+      <p>Вы уверены, что хотите удалить смартфон "{{ smartphone.brand }} {{ smartphone.model }}"?</p>
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a href="{% url 'market:index' %}" class="btn btn-secondary">Отмена</a>
+      </form>
+    </div>
+  </div>
+    
+
+
+</main>
+
+  <link rel="stylesheet" type="text/css" href="{% static 'css/detail_phone.css' %}" />
+{% endblock %}

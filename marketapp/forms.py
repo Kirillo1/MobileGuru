@@ -63,3 +63,9 @@ class SmartPhoneForm(forms.ModelForm):
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['price'].widget.attrs['class'] = 'form-control'
 
+
+class SmartPhoneEditForm(SmartPhoneForm):
+    class Meta:
+        model = SmartPhone
+        fields = ['brand', 'model', 'display_size', 'storage_capacity', 'processor', 
+                  'battery_capacity', 'description', 'price']

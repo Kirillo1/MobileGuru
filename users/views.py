@@ -29,7 +29,7 @@ def view_login(request: HttpRequest) -> HttpResponse:
 
 @login_required(login_url='users:login')
 def view_profile(request: HttpRequest) -> HttpResponse:
-    user=request.user
+    user = request.user
     if request.method == 'POST':
         avatar_form = AvatarUserForm(request.POST, request.FILES,instance=request.user)
         form = UserProfileForm(data=request.POST, instance=user)
@@ -60,6 +60,8 @@ def register_user(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
+            main_image = request.FILES.get('main_image')
+            form.instance.image = main_image
             user = form.save()
             login(request, user)
             return redirect('market:index')

@@ -50,10 +50,9 @@ body {
 
 footer {
     height: 100px;
-    position: fixed;
-    bottom: 0;
     width: 100%;
-    padding: 10px 0;
+    margin-top: 50px;
+    margin-bottom: 0;
 }
 
 a {
