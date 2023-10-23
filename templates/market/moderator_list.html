@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block lists %}
+  Главная страница
+{% endblock %}
+{% block content %}
+{% for smartphon in smartphones %}
+    {{ smartphon }}
+{% endfor %}
+
+<script src="{% static 'js/moderator.js' %}"></script>
+
+{% endblock %}
