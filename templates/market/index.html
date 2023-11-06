@@ -46,8 +46,9 @@
               </svg>
             </button>
           </div>
-          <p>Likes: <span id="likes-count-{{ smartphone.id }}">{{ smartphone.likes_count }}</span></p>
-
+          <p>
+            Likes: <span id="likes-count-{{ smartphone.id }}">{{ smartphone.likes_count }}</span>
+          </p>
         </div>
       {% endfor %}
     </div>
@@ -56,19 +57,20 @@
     <h2 class="pb-2 border-bottom">Всего {{ all_users.count }} компаний</h2>
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
       {% for user in all_users %}
-        <div class="card" style="width: 18rem;">
-          {% if user.image %}
-            <img src="{{ user.image.url }}" class="card-img-top" alt="..." />
-          {% endif %}
-          <div class="card-body">
-            <h4>{{ user.company_name }}</h4>
-            <p class="card-text">Количество товара:</p>
-            <p class="card-text">Рейтинг компании:</p>
+        <a href="{% url 'users:company' user.pk %}">
+          <div class="card" style="width: 18rem;">
+            {% if user.image %}
+              <img src="{{ user.image.url }}" class="card-img-top" alt="..." />
+            {% endif %}
+            <div class="card-body">
+              <h4>{{ user.company_name }}</h4>
+              <p class="card-text">Количество товара:</p>
+              <p class="card-text">Рейтинг компании:</p>
+            </div>
           </div>
-        </div>
+        </a>
       {% endfor %}
     </div>
   </div>
   <script src="{% static 'js/index.js' %}"></script>
-
 {% endblock %}
