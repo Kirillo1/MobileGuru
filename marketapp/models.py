@@ -27,9 +27,7 @@ class SmartPhone(models.Model):
         'Объем встроенной памяти'
         )
 
-    likes = models.ManyToManyField(
-        User, related_name="likes"
-        )
+    likes_count = models.PositiveIntegerField(default=0)
 
     seller = models.ForeignKey(
         User,
@@ -77,6 +75,13 @@ class SmartPhone(models.Model):
     class Meta:
         verbose_name = 'Смартфон'
         verbose_name_plural = 'Смартфоны'
+
+    def like(self):
+        self.likes_count += 1
+    
+    def unlike(self):
+        if self.likes_count > 0:
+            self.likes_count -= 1
 
 class FulfilledSmartPhoneImages(models.Model):
     smartphone = models.ForeignKey(

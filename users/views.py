@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.contrib.auth import logout, login
 from .forms import UserProfileForm, UserLoginForm, AvatarUserForm, UserRegistrationForm
+from .models import User
 
 
 def view_login(request: HttpRequest) -> HttpResponse:
@@ -71,4 +72,8 @@ def register_user(request):
     else:
         form = UserRegistrationForm()
     return render(request, 'users/registration.html', {'form': form})
+
+def view_company(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    return render(request, 'users/company.html', {'company': user})
 

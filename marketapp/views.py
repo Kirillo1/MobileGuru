@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import JsonResponse
 
 from .models import SmartPhone, FulfilledSmartPhoneImages
 from users.models import User
 from .forms import SmartPhoneForm, SmartPhoneEditForm
+
 
 def view_index(request):
     smartphones = SmartPhone.objects.all()
@@ -13,6 +15,7 @@ def view_index(request):
         'all_users': all_users
         }
     return render(request, 'market/index.html', context)
+
 
 @login_required
 def create_smartphone_view(request):
@@ -67,3 +70,44 @@ def edit_smartphone_view(request, smartphone_id):
         form = SmartPhoneEditForm(instance=smartphone)
 
     return render(request, 'market/edit_phone.html', {'form': form, 'smartphone': smartphone})
+
+
+def is_moderator(user):
+    return user.is_staff
+
+
+@user_passes_test(is_moderator)
+def moderator_list_view(request):
+    smartphones = SmartPhone.objects.all().filter(status="Pending")
+    context = {
+        'smartphones': smartphones,
+    }
+    return render(request, 'market/moderator_list.html', context)
+
+
+def like_smartphone(request, smartphone_id):
+    smartphone = SmartPhone.objects.get(pk=smartphone_id)
+    liked_cookie_name = f'liked_{smartphone_id}'
+
+    if liked_cookie_name not in request.COOKIES:
+        smartphone.likes_count += 1
+        smartphone.save()
+        response = JsonResponse({'likes': smartphone.likes_count})
+        response.set_cookie(liked_cookie_name, '1')
+        return response
+    else:
+        return JsonResponse({'error': 'Вы уже поставили лайк'})
+
+
+def unlike_smartphone(request, smartphone_id):
+    smartphone = SmartPhone.objects.get(pk=smartphone_id)
+    liked_cookie_name = f'liked_{smartphone_id}'
+
+    if liked_cookie_name in request.COOKIES:
+        smartphone.likes_count -= 1
+        smartphone.save()
+        response = JsonResponse({'likes': smartphone.likes_count})
+        response.delete_cookie(liked_cookie_name)
+        return response
+    else:
+        return JsonResponse({'error': 'Вы еще не ставили лайк'})
