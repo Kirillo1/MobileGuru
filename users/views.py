@@ -6,6 +6,7 @@ from django.contrib import auth
 from django.contrib.auth import logout, login
 from .forms import UserProfileForm, UserLoginForm, AvatarUserForm, UserRegistrationForm
 from .models import User
+from marketapp.models import SmartPhone
 
 
 def view_login(request: HttpRequest) -> HttpResponse:
@@ -28,11 +29,13 @@ def view_login(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'users/login.html', context)
 
+
 @login_required(login_url='users:login')
 def view_profile(request: HttpRequest) -> HttpResponse:
     user = request.user
     if request.method == 'POST':
-        avatar_form = AvatarUserForm(request.POST, request.FILES,instance=request.user)
+        avatar_form = AvatarUserForm(
+            request.POST, request.FILES, instance=request.user)
         form = UserProfileForm(data=request.POST, instance=user)
         if form.is_valid():
             avatar_form.save()
@@ -42,7 +45,6 @@ def view_profile(request: HttpRequest) -> HttpResponse:
         form = UserProfileForm(instance=user)
         avatar_form = AvatarUserForm(instance=user)
 
-
     context = {
         'form': form,
         'groups': [group.name for group in user.groups.all()],
@@ -51,7 +53,8 @@ def view_profile(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'users/profile.html', context=context)
 
-def view_logout(request:HttpRequest) -> HttpResponse:
+
+def view_logout(request: HttpRequest) -> HttpResponse:
     logout(request)
 
     return HttpResponseRedirect(reverse('market:index'))
@@ -73,7 +76,8 @@ def register_user(request):
         form = UserRegistrationForm()
     return render(request, 'users/registration.html', {'form': form})
 
+
 def view_company(request, user_id):
     user = get_object_or_404(User, pk=user_id)
-    return render(request, 'users/company.html', {'company': user})
-
+    smartphones = SmartPhone.objects.filter(seller=user)
+    return render(request, 'users/company.html', {'company': user, 'smartphones': smartphones})

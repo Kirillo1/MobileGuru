@@ -21,13 +21,13 @@
                     <svg class="bi me-2" width="1em" height="1em">
                       <use xlink:href="#geo-fill" />
                     </svg>
-                    <small>Earthhhhhh</small>
+                    <small>{{ smartphone.seller.company_name }}</small>
                   </li>
                   <li class="d-flex align-items-center">
                     <svg class="bi me-2" width="1em" height="1em">
                       <use xlink:href="#calendar3" />
                     </svg>
-                    <small>3ddddddd</small>
+                    <small>{{ smartphone.price|floatformat:0 }} Р</small>
                   </li>
                 </ul>
               </div>
@@ -64,7 +64,7 @@
             {% endif %}
             <div class="card-body">
               <h4>{{ user.company_name }}</h4>
-              <p class="card-text">Количество товара:</p>
+              <p class="card-text">Количество товара: {{ user.smartphones.count }}</p>
               <p class="card-text">Рейтинг компании:</p>
             </div>
           </div>
