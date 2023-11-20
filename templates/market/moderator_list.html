@@ -4,9 +4,40 @@
   Главная страница
 {% endblock %}
 {% block content %}
-{% for smartphon in smartphones %}
-    {{ smartphon }}
-{% endfor %}
+    
+<table class="table table-dark border border-dark-subtle">
+
+  <thead>
+    <tr>
+      <th scope="col">Пользователь</th>
+      <th scope="col">Компания</th>
+      <th scope="col">Рейтинг</th>
+      <th scope="col">Товар</th>
+      <th scope="col">Статус</th>
+    </tr>
+  </thead>
+  {% for smartphone in smartphones %}
+
+  <tbody>
+    <tr>
+      <th scope="row">{{smartphone.seller }}</th>
+      <td>{{smartphone.seller.company_name }}</td>
+      <td>5</td>
+      <td><a href="{% url 'market:detail_phone' smartphone.pk %}">{{ smartphone.model }}</a></td>
+      <td>
+        <select class="form-select form-select-sm text-bg-dark">
+          <option selected>Open this select menu</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </td>
+
+    </tr>
+  </tbody>
+  {% endfor %}
+
+</table>
 
 <script src="{% static 'js/moderator.js' %}"></script>
 
