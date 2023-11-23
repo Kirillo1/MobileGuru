@@ -1,13 +1,14 @@
 from django import forms
 from .models import SmartPhone, FulfilledSmartPhoneImages
 
+
 class SmartPhoneForm(forms.ModelForm):
     brand = forms.CharField(
         label='Бренд',
         widget=forms.TextInput(attrs={'placeholder': 'Бренд'}),
         required=True
     )
-    
+
     model = forms.CharField(
         label='Модель',
         widget=forms.TextInput(attrs={'placeholder': 'Модель'}),
@@ -22,7 +23,8 @@ class SmartPhoneForm(forms.ModelForm):
 
     storage_capacity = forms.IntegerField(
         label='Объем встроенной памяти',
-        widget=forms.NumberInput(attrs={'placeholder': 'Объем встроенной памяти'}),
+        widget=forms.NumberInput(
+            attrs={'placeholder': 'Объем встроенной памяти'}),
         required=True
     )
 
@@ -48,9 +50,9 @@ class SmartPhoneForm(forms.ModelForm):
 
     class Meta:
         model = SmartPhone
-        fields = ('brand', 'model', 'display_size', 'storage_capacity', 'processor', 
+        fields = ('brand', 'model', 'display_size', 'storage_capacity', 'processor',
                   'battery_capacity', 'description', 'price')
-        
+
     def __init__(self, *args, **kwargs):
         super(SmartPhoneForm, self).__init__(*args, **kwargs)
 
@@ -67,5 +69,5 @@ class SmartPhoneForm(forms.ModelForm):
 class SmartPhoneEditForm(SmartPhoneForm):
     class Meta:
         model = SmartPhone
-        fields = ['brand', 'model', 'display_size', 'storage_capacity', 'processor', 
+        fields = ['brand', 'model', 'display_size', 'storage_capacity', 'processor',
                   'battery_capacity', 'description', 'price']
