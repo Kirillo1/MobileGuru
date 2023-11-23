@@ -13,7 +13,7 @@ def view_index(request):
     context = {
         'smartphones': smartphones,
         'all_users': all_users
-        }
+    }
     return render(request, 'market/index.html', context)
 
 
@@ -21,7 +21,7 @@ def view_index(request):
 def create_smartphone_view(request):
     if request.method == 'POST':
         form = SmartPhoneForm(request.POST)
-        images= request.FILES.getlist('images')
+        images = request.FILES.getlist('images')
 
         if form.is_valid():
             main_image = request.FILES.get('main_image')
