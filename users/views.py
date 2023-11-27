@@ -33,6 +33,7 @@ def view_login(request: HttpRequest) -> HttpResponse:
 @login_required(login_url='users:login')
 def view_profile(request: HttpRequest) -> HttpResponse:
     user = request.user
+    smartphones = SmartPhone.objects.filter(seller=user)
     if request.method == 'POST':
         avatar_form = AvatarUserForm(
             request.POST, request.FILES, instance=request.user)
@@ -48,7 +49,8 @@ def view_profile(request: HttpRequest) -> HttpResponse:
     context = {
         'form': form,
         'groups': [group.name for group in user.groups.all()],
-        'avatar_form': avatar_form
+        'avatar_form': avatar_form,
+        'smartphones': smartphones
     }
 
     return render(request, 'users/profile.html', context=context)
