@@ -80,6 +80,35 @@
             </div>
         </div>
     </div>
+    <hr class="my-4" />
+    <h2 class="">У вас всего товаров - {{ smartphones.count }}</h2>
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+    {% for smartphone in smartphones %}
+    <div class="col">
+      <a href="{% url 'market:detail_phone' smartphone.pk %}">
+        <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-3 shadow-lg" style="background-image: url('{{ smartphone.main_image.url }}');">
+          <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ smartphone.brand }}</h3>
+            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{ smartphone.model }}</h3>
+
+            <ul class="d-flex list-unstyled mt-auto">
+              <li class="d-flex align-items-center me-3">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#geo-fill" />
+                </svg>
+              </li>
+              <li class="d-flex align-items-center">
+                <svg class="bi me-2" width="1em" height="1em">
+                  <use xlink:href="#calendar3" />
+                </svg>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
 </div>
   <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
   <script src="{% static 'js/profile.js' %}"></script>
