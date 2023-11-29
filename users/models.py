@@ -4,7 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
-    
+
     image = models.ImageField(
         'Ваш лого',
         upload_to='users_images',
@@ -27,3 +27,6 @@ class User(AbstractUser):
         blank=True
     )
 
+    # rating =
+
+    # company_information =

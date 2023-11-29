@@ -20,12 +20,14 @@ def view_index(request):
 @login_required
 def create_smartphone_view(request):
     if request.method == 'POST':
+        user = request.user
         form = SmartPhoneForm(request.POST)
         images = request.FILES.getlist('images')
 
         if form.is_valid():
             main_image = request.FILES.get('main_image')
             form.instance.main_image = main_image
+            form.instance.seller = user
             form.save()
 
             for image in images:
@@ -79,10 +81,23 @@ def is_moderator(user):
 @user_passes_test(is_moderator)
 def moderator_list_view(request):
     smartphones = SmartPhone.objects.all().filter(status="Pending")
+    # status_change_form = StatusChangeForm()
     context = {
         'smartphones': smartphones,
+        # 'status_change_form': status_change_form,
     }
     return render(request, 'market/moderator_list.html', context)
+
+
+def update_status_view(request, smartphone_id, new_status):
+    print(smartphone_id)
+    print(new_status)
+
+    smartphone = get_object_or_404(SmartPhone, pk=smartphone_id)
+    smartphone.status = new_status
+    smartphone.save()
+
+    return JsonResponse({'success': True})
 
 
 def like_smartphone(request, smartphone_id):
