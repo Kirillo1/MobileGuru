@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 User = get_user_model()
 
@@ -70,8 +72,17 @@ class SmartPhone(models.Model):
         'Цена', max_digits=10, decimal_places=2
     )
 
-    # grade =
-
+    grade = models.DecimalField(
+        'Оценка',
+        max_digits=3,
+        decimal_places=2,
+        default=0.0,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(5),
+        ]
+    )
+    
     def __str__(self):
         return self.model
 

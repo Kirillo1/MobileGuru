@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 
 class User(AbstractUser):
@@ -27,6 +29,17 @@ class User(AbstractUser):
         blank=True
     )
 
-    # rating =
+    grade = models.DecimalField(
+        'Оценка',
+        max_digits=3,
+        decimal_places=2,
+        default=0.0,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(5),
+        ]
+    )
 
-    # company_information =
+    company_information = models.TextField(
+        'Информация о компани'
+    )
