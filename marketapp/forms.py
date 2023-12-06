@@ -1,5 +1,5 @@
 from django import forms
-from .models import SmartPhone, FulfilledSmartPhoneImages
+from .models import SmartPhone
 
 
 class SmartPhoneForm(forms.ModelForm):
@@ -71,16 +71,3 @@ class SmartPhoneEditForm(SmartPhoneForm):
         model = SmartPhone
         fields = ['brand', 'model', 'display_size', 'storage_capacity', 'processor',
                   'battery_capacity', 'description', 'price']
-
-
-# class StatusChangeForm(forms.ModelForm):
-#     class Meta:
-#         model = SmartPhone
-#         fields = ['status']
-#         widgets = {
-#             'status': forms.Select(attrs={'class': 'form-control', 'id': 'id_status'}),
-#         }
-
-#     def __init__(self, *args, **kwargs):
-#         super(StatusChangeForm, self).__init__(*args, **kwargs)
-#         self.fields['status'].label = ''

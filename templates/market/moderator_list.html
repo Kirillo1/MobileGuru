@@ -4,9 +4,10 @@
   Главная страница
 {% endblock %}
 {% block content %}
-    
-<table class="table table-dark border border-dark-subtle">
 
+<h2 class="mt-4">Смартфоны на проверке - {{ pending_smartphones.count }}</h2>
+<div class="container">
+<table class="table table-dark border border-dark-subtle mt-3">
   <thead>
     <tr>
       <th scope="col">Пользователь</th>
@@ -16,8 +17,7 @@
       <th scope="col">Статус</th>
     </tr>
   </thead>
-  {% for smartphone in smartphones %}
-
+  {% for smartphone in pending_smartphones %}
   <tbody>
     <tr>
       <th scope="row">{{smartphone.seller }}</th>
@@ -25,20 +25,23 @@
       <td>5</td>
       <td><a href="{% url 'market:detail_phone' smartphone.pk %}">{{ smartphone.model }}</a></td>
       <td>
-        <form method="post" action="#">
-          {% csrf_token %}
-          <div>
-            {{ status_change_form }}
-          </div>
-      </form>
+        <select class="form-select form-select-sm text-light bg-dark border border-secondary-subtle" onChange="changeSmartphoneStatus({{smartphone.pk}})" id='status_selectId_{{smartphone.pk}}'>
+          <option value="pending" selected>На проверке</option>
+          <option value="approved">Одобрено</option>
+          <option value="rejected">Отклонено</option>
+        </select>
       </td>
 
     </tr>
   </tbody>
   {% endfor %}
-
 </table>
-
+</div>
 <script src="{% static 'js/moderator.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.es5.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/moderator_list.css' %}" />
+
 
 {% endblock %}

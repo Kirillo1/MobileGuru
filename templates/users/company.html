@@ -28,6 +28,7 @@
       <p class="text-body-secondary">Имя: {{ company.first_name }}</p>
       <p class="text-body-secondary">Фамилия: {{ company.last_name }}</p>
       <p class="text-body-secondary">Отчество: {{ company.father_name }}</p>
+      <p class="text-body-secondary">Отчество: {{ company.company_information }}</p>
     </div>
 
     <div class="col">
@@ -39,7 +40,7 @@
             </svg>
           </div>
           <h4 class="fw-semibold mb-0 text-body-emphasis">Количество товаров</h4>
-          <p class="text-body-secondary">{{ company }}</p>
+          <p class="text-body-secondary">{{ smartphones.count }}</p>
         </div>
 
         <div class="col d-flex flex-column gap-2">
@@ -58,8 +59,8 @@
               <use xlink:href="#speedometer" />
             </svg>
           </div>
-          <h4 class="fw-semibold mb-0 text-body-emphasis">Отзывы</h4>
-          <p class="text-body-secondary">Реальные отзывы о продавце</p>
+          <h4 class="fw-semibold mb-0 text-body-emphasis">Рейтинг</h4>
+          <p class="text-body-secondary">{{ company.grade }}</p>
         </div>
 
         <div class="col d-flex flex-column gap-2">

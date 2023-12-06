@@ -1,24 +1,20 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const statusSelect = document.getElementById('id_status');
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    
+    if (parts.length === 2) {
+        return parts.pop().split(';').shift();
+    }
+}
 
-    statusSelect.addEventListener('change', function() {
+function changeSmartphoneStatus(smartphoneId) {
+    const statusSelect = document.getElementById(`status_selectId_${smartphoneId}`);
+
         const selectedValue = statusSelect.value;
-        const smartphoneId = 2
-        console.log('Selected value:', selectedValue);
-
-        // fetch(`/update_status/${smartphoneId}/${selectedValue}/`, {
-        //     method: "POST",
-        //     headers: {
-        //       "X-CSRFToken": getCookie("csrftoken"), // Убедитесь, что у вас установлен CSRF токен
-        //     },
-        //   })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //       // Обновляем интерфейс или выполняем другие действия при успешном обновлении
-        //       console.log(data);
-        //     })
-        //     .catch((error) => {
-        //       console.error("Error:", error);
-        //     });
-    });
-});
+        fetch(`/update_status/${smartphoneId}/${selectedValue}/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+          })
+  }
