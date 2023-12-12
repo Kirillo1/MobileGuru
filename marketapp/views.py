@@ -87,11 +87,14 @@ def moderator_list_view(request):
     return render(request, 'market/moderator_list.html', context)
 
 
-def update_status_view(smartphone_id, new_status):
-    smartphone = get_object_or_404(SmartPhone, pk=smartphone_id)
-    smartphone.status = new_status
-    smartphone.save()
-    return JsonResponse({'success': True})
+def update_status_view(request, smartphone_id, new_status):
+    try:
+        smartphone = get_object_or_404(SmartPhone, pk=smartphone_id)
+        smartphone.status = new_status
+        smartphone.save()
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False})
 
 
 def like_smartphone(request, smartphone_id):
