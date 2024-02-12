@@ -47,6 +47,9 @@
       <a href="{% url 'market:smartphone_edit' smartphone.pk %}">Edit</a>
     {% endif %}
   </main>
+  <div>
+    <a href="{% url 'comments:create_comment' smartphone.pk %}">Добавить комментарий</a>
+  </div>
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/detail_phone.css' %}" />
 {% endblock %}

@@ -22,7 +22,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('marketapp.urls', namespace='market')),
-    path('users/', include('users.urls', namespace='users'))
+    path('users/', include('users.urls', namespace='users')),
+    path('comments/', include('comments.urls', namespace='comments'))
 ]
 
 if settings.DEBUG:
