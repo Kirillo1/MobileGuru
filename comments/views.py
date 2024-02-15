@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render, redirect, get_object_or_404
 
 from comments.forms import CommentForm
 from marketapp.models import SmartPhone
 from users.models import User
+from .models import Comment
 
 
+@login_required
 def create_comment_view(request, pk):
     smartphone = SmartPhone.objects.get(pk=pk)
 
@@ -22,3 +26,14 @@ def create_comment_view(request, pk):
         form = CommentForm()
         
     return render(request, 'comments/create_view.html', {'form': form})
+
+
+@login_required
+def delete_comment_view(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('market:index')
+    
+    return render(request, 'comments/delete_view.html', {'comment': comment})

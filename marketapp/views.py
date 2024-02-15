@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
 
 from .models import SmartPhone, FulfilledSmartPhoneImages
+from comments.models import Comment
 from users.models import User
 from .forms import SmartPhoneForm, SmartPhoneEditForm
 
@@ -45,7 +46,10 @@ def create_smartphone_view(request):
 
 def detail_phone_view(request, smartphone_id):
     smartphone = get_object_or_404(SmartPhone, pk=smartphone_id)
-    return render(request, 'market/detail_phone.html', {'smartphone': smartphone})
+    comments = Comment.objects.filter(smartphone=smartphone_id)
+    return render(request, 'market/detail_phone.html', 
+                  {'smartphone': smartphone,
+                   'comments': comments})
 
 
 @login_required
