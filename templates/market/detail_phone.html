@@ -55,6 +55,8 @@
   {{ comment.content }}
   {{ comment.created_at }}
   <a href="{% url 'comments:delete_comment' comment.pk %}">Delete comment</a>
+  <a href="{% url 'comments:edit_comment' comment.pk %}">Edit comment</a>
+
   {% endfor %}
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/detail_phone.css' %}" />

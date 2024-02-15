@@ -37,3 +37,19 @@ def delete_comment_view(request, pk):
         return redirect('market:index')
     
     return render(request, 'comments/delete_view.html', {'comment': comment})
+
+
+@login_required
+def edit_comment_view(request, pk):
+    comment = Comment.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+
+        if form.is_valid():
+            form.save()
+            return redirect('market:index')
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(request, 'comments/edit_view.html', {'form': form, 'comment': comment})
