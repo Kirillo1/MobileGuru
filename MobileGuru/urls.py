@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('marketapp.urls', namespace='market')),
     path('users/', include('users.urls', namespace='users')),
-    path('comments/', include('comments.urls', namespace='comments'))
+    path('comments/', include('comments.urls', namespace='comments')),
+    path('company/', include('company.urls', namespace='company'))
 ]
 
 if settings.DEBUG:
