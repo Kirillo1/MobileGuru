@@ -28,6 +28,8 @@ class User(AbstractUser):
         blank=True
     )
     
+    groups_user = models.ManyToManyField('auth.Group', related_name='user_set_custom')
+
 
     class Meta:
         verbose_name = 'Пользователь'
