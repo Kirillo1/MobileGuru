@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 from marketapp.models import SmartPhone
+from companies.models import Company
+
 
 User = get_user_model()
 
@@ -12,6 +14,16 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         related_name='comments',
         verbose_name='Смартфон',
+        blank=True,
+        null=True,
+    )
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='Комментарий',
+        blank=True,
+        null=True,
     )
     author = models.ForeignKey(
         User,
@@ -19,12 +31,6 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Автор",
         null=True
-    )
-    anonymous_user_name = models.CharField(
-        "Имя незарегистрированного пользователя",
-        max_length=255,
-        blank=True,
-        null=True,
     )
     content = models.TextField(
         "Контент"

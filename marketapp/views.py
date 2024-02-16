@@ -10,10 +10,8 @@ from .forms import SmartPhoneForm, SmartPhoneEditForm
 
 def view_index(request):
     smartphones = SmartPhone.objects.all()
-    all_users = User.objects.filter(is_staff=False)
     context = {
         'smartphones': smartphones,
-        'all_users': all_users
     }
     return render(request, 'market/index.html', context)
 

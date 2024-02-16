@@ -54,9 +54,9 @@
     </div>
     <hr class="my-4" />
 
-    <h2 class="pb-2 border-bottom">Всего компаний - {{ all_users.count }}</h2>
+    <h2 class="pb-2 border-bottom">Всего компаний - 0</h2>
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
-      {% for user in all_users %}
+      {% comment %} {% for user in all_users %}
         <a href="{% url 'users:company' user.pk %}">
           <div class="card" style="width: 18rem;">
             {% if user.image %}
@@ -69,7 +69,7 @@
             </div>
           </div>
         </a>
-      {% endfor %}
+      {% endfor %} {% endcomment %}
     </div>
   </div>
   <script src="{% static 'js/index.js' %}"></script>

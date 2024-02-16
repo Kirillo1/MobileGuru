@@ -12,7 +12,7 @@ class User(AbstractUser):
         'Адрес электронной почты',
         unique=True
     )
-    phonenumber = PhoneNumberField(
+    phone_number = PhoneNumberField(
         'Номер телефона',
         unique=True,
     )
@@ -22,9 +22,12 @@ class User(AbstractUser):
         blank=True,
         null=True
     )
+    image = models.ImageField(
+        'Ваша фотография',
+        upload_to='users_images',
+        blank=True
+    )
     
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['phonenumber']
 
     class Meta:
         verbose_name = 'Пользователь'

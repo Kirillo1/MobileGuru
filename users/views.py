@@ -5,8 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.contrib.auth import logout, login
 from .forms import UserProfileForm, UserLoginForm, AvatarUserForm, UserRegistrationForm
-from .models import User
-from marketapp.models import SmartPhone
 
 
 def view_login(request: HttpRequest) -> HttpResponse:
@@ -33,7 +31,6 @@ def view_login(request: HttpRequest) -> HttpResponse:
 @login_required(login_url='users:login')
 def view_profile(request: HttpRequest) -> HttpResponse:
     user = request.user
-    smartphones = SmartPhone.objects.filter(seller=user)
     if request.method == 'POST':
         avatar_form = AvatarUserForm(
             request.POST, request.FILES, instance=request.user)
@@ -50,7 +47,6 @@ def view_profile(request: HttpRequest) -> HttpResponse:
         'form': form,
         'groups': [group.name for group in user.groups.all()],
         'avatar_form': avatar_form,
-        'smartphones': smartphones
     }
 
     return render(request, 'users/profile.html', context=context)
@@ -79,7 +75,3 @@ def register_user(request):
     return render(request, 'users/registration.html', {'form': form})
 
 
-def view_company(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    smartphones = SmartPhone.objects.filter(seller=user)
-    return render(request, 'users/company.html', {'company': user, 'smartphones': smartphones})
