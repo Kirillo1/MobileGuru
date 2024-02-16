@@ -1,45 +1,31 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
-from django.core.validators import MinValueValidator, MaxValueValidator
 
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
-
-    image = models.ImageField(
-        'Ваш лого',
-        upload_to='users_images',
-        blank=True
-    )
-    phone_number = PhoneNumberField(
-        'Номер телефона',
+    email = models.EmailField(
+        'Адрес электронной почты',
         unique=True
+    )
+    phonenumber = PhoneNumberField(
+        'Номер телефона',
+        unique=True,
     )
     father_name = models.CharField(
         'Отчество',
-        max_length=60,
-        null=True,
-        blank=True
+        max_length=50,
+        blank=True,
+        null=True
     )
-    company_name = models.CharField(
-        'Название компании',
-        max_length=100,
-        null=True,
-        blank=True
-    )
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['phonenumber']
 
-    grade = models.DecimalField(
-        'Оценка',
-        max_digits=3,
-        decimal_places=2,
-        default=0.0,
-        validators=[
-            MinValueValidator(0),
-            MaxValueValidator(5),
-        ]
-    )
-
-    company_information = models.TextField(
-        'Информация о компани'
-    )
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'

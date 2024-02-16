@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'marketapp',
     'comments',
     'users',
-    'company',
+    'companies',
     'phonenumber_field',
 ]
 
