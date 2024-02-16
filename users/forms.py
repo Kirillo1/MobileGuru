@@ -30,11 +30,10 @@ class UserProfileForm(UserChangeForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ваше имя'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ваша фамилия'}))
     father_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ваше отчество'}))
-    company_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Название компании'}))
 
     class Meta:
         model = User
-        fields = ('username', 'phone_number', 'email', 'first_name', 'last_name', 'father_name', 'image', 'company_name')
+        fields = ('username', 'phone_number', 'email', 'first_name', 'last_name', 'father_name', 'image')
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
@@ -55,7 +54,7 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'phone_number', 'email', 'first_name', 'last_name', 'father_name', 'company_name', 'image')
+        fields = ('username', 'phone_number', 'email', 'first_name', 'last_name', 'father_name', 'image')
     
     def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
@@ -66,7 +65,6 @@ class UserRegistrationForm(forms.ModelForm):
         self.fields['first_name'].widget.attrs['class'] = 'form-control'
         self.fields['last_name'].widget.attrs['class'] = 'form-control'
         self.fields['father_name'].widget.attrs['class'] = 'form-control'
-        self.fields['company_name'].widget.attrs['class'] = 'form-control'
         self.fields['image'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
         self.fields['confirm_password'].widget.attrs['class'] = 'form-control'
