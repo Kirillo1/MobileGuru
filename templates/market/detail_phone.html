@@ -47,17 +47,26 @@
       <a href="{% url 'market:smartphone_edit' smartphone.pk %}">Edit</a>
     {% endif %}
   </main>
+
+
+  {% if user.is_authenticated %}
   <div>
     <a href="{% url 'comments:create_comment' smartphone.pk %}">Добавить комментарий</a>
   </div>
+{% endif %}
+<div style="margin-bottom: 300px;">
   {% for comment in comments %}
-  {{ comment.author }}
-  {{ comment.content }}
-  {{ comment.created_at }}
-  <a href="{% url 'comments:delete_comment' comment.pk %}">Delete comment</a>
-  <a href="{% url 'comments:edit_comment' comment.pk %}">Edit comment</a>
+    {{ comment.author }}
+    {{ comment.content }}
+    {{ comment.created_at }}
+
+    {% if user == comment.author %}
+    <a href="{% url 'comments:delete_comment' comment.pk %}">Delete comment</a>
+    <a href="{% url 'comments:edit_comment' comment.pk %}">Edit comment</a>
+    {% endif %}
 
   {% endfor %}
+</div>
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/detail_phone.css' %}" />
 {% endblock %}

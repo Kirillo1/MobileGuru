@@ -5,7 +5,6 @@
 {% endblock %}
 {% block content %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
-  <div class="container px-4 py-5" id="custom-cards">
     <h2 class="pb-2 border-bottom">Смартфоны товаров - {{ smartphones.count }}</h2>
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
       {% for smartphone in smartphones %}
@@ -56,21 +55,20 @@
 
     <h2 class="pb-2 border-bottom">Всего компаний - 0</h2>
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
-      {% comment %} {% for user in all_users %}
-        <a href="{% url 'users:company' user.pk %}">
+      {% for company in all_companies %}
+        <a href="{% url 'companies:detail_company' company.title_hash %}">
           <div class="card" style="width: 18rem;">
-            {% if user.image %}
-              <img src="{{ user.image.url }}" class="card-img-top" alt="..." />
+            {% if company.image %}
+              <img src="{{ company.image.url }}" class="card-img-top" alt="..." />
             {% endif %}
             <div class="card-body">
-              <h4>{{ user.company_name }}</h4>
-              <p class="card-text">Количество товара: {{ user.smartphones.count }}</p>
+              <h4>{{ company.company_name }}</h4>
+              <p class="card-text">Количество товара: {{ company.smartphones.count }}</p>
               <p class="card-text">Рейтинг компании:</p>
             </div>
           </div>
         </a>
-      {% endfor %} {% endcomment %}
+      {% endfor %}
     </div>
-  </div>
   <script src="{% static 'js/index.js' %}"></script>
 {% endblock %}

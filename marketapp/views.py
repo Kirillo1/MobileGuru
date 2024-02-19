@@ -4,14 +4,16 @@ from django.http import JsonResponse
 
 from .models import SmartPhone, FulfilledSmartPhoneImages
 from comments.models import Comment
-from users.models import User
+from companies.models import Company
 from .forms import SmartPhoneForm, SmartPhoneEditForm
 
 
 def view_index(request):
     smartphones = SmartPhone.objects.all()
+    all_companies = Company.objects.all()
     context = {
         'smartphones': smartphones,
+        'all_companies': all_companies
     }
     return render(request, 'market/index.html', context)
 

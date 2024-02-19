@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from comments.forms import CommentForm
 from marketapp.models import SmartPhone
-from users.models import User
+from companies.models import Company
 from .models import Comment
 
 
 @login_required
-def create_comment_view(request, pk):
+def create_comment_smarphone_view(request, pk):
     smartphone = SmartPhone.objects.get(pk=pk)
 
     if request.method == 'POST':
@@ -18,6 +18,26 @@ def create_comment_view(request, pk):
 
         if form.is_valid():
             form.instance.smartphone = smartphone
+            form.instance.author = user
+            form.save()
+
+            return redirect('market:index')
+    else:
+        form = CommentForm()
+        
+    return render(request, 'comments/create_view.html', {'form': form})
+
+
+@login_required
+def create_comment_company_view(request, title_hash):
+    company = Company.objects.get(title_hash=title_hash)
+
+    if request.method == 'POST':
+        user = request.user
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            form.instance.company = company
             form.instance.author = user
             form.save()
 

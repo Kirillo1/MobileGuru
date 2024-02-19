@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block lists %}
-  Детальная страница
+  Информация о {{ company.company_name }}
 {% endblock %}
 {% block content %}
   <div class="px-4 pt-5 my-5 text-center border-bottom">
     <h1 class="display-4 fw-bold text-body-emphasis">{{ company.company_name }}</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Здесь будет описание компании</p>
+      <p class="lead mb-4">{{ company.company_information }}</p>
     </div>
     <div class="overflow-hidden" style="max-height: 30vh;">
       <div class="container px-5">
@@ -25,10 +25,9 @@
     <div class="col d-flex flex-column align-items-start gap-2">
       <h2 class="fw-bold text-body-emphasis">О компании</h2>
       <p class="text-body-secondary">Номер телефона: {{ company.phone_number }}</p>
-      <p class="text-body-secondary">Имя: {{ company.first_name }}</p>
-      <p class="text-body-secondary">Фамилия: {{ company.last_name }}</p>
-      <p class="text-body-secondary">Отчество: {{ company.father_name }}</p>
-      <p class="text-body-secondary">Отчество: {{ company.company_information }}</p>
+      <p class="text-body-secondary">Имя владельца: {{ company_owner.first_name }}</p>
+      <p class="text-body-secondary">Фамилия владельца: {{ company_owner.last_name }}</p>
+      <p class="text-body-secondary">Отчество владельца: {{ company_owner.father_name }}</p>
     </div>
 
     <div class="col">
@@ -76,8 +75,28 @@
     </div>
   </div>
 
+  {% if user.is_authenticated %}
+    <div>
+      <a href="{% url 'comments:create_comment_company' company.title_hash %}">Добавить комментарий</a>
+    </div>
+  {% endif %}
+  <div style="margin-bottom: 300px;">
+    {% for comment in comments %}
+      {{ comment.author }}
+      {{ comment.content }}
+      {{ comment.created_at }}
+
+      {% if user == comment.author %}
+
+        <a href="{% url 'comments:delete_comment' comment.pk %}">Delete comment</a>
+        <a href="{% url 'comments:edit_comment' comment.pk %}">Edit comment</a>
+      {% endif %}
+
+    {% endfor %}
+  </div>
+
   <h2 class="pb-2 border-bottom">Все товары от {{ company.company_name }}</h2>
-  <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+  <div class="row row-cols-1 row-cols-lg-3 align-items-stretch">
     {% if smartphones %}
     {% for smartphone in smartphones %}
       <div class="col">
@@ -90,7 +109,7 @@
           </div>
         </a>
 
-        {% comment %} <div class="btn-group" style="height: 30px;" role="group" aria-label="Basic example">
+        <div class="btn-group" style="height: 30px;" role="group" aria-label="Basic example">
           <button type="button" class="btn btn-link like-btn" data-smartphone-id="{{ smartphone.pk }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
               <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
@@ -104,7 +123,7 @@
         </div>
         <p>
           Likes: <span id="likes-count-{{ smartphone.id }}">{{ smartphone.likes_count }}</span>
-        </p> {% endcomment %}
+        </p>
       </div>
     {% endfor %}
 

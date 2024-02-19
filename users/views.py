@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -66,7 +66,7 @@ def register_user(request):
             form.instance.image = main_image
             user = form.save()
             login(request, user)
-            return redirect('market:index')
+            return redirect('companies:register_company')
         else:
             for field, errors in form.errors.items():
                 print(f"Field: {field}, Errors: {', '.join(errors)}")
