@@ -4,9 +4,14 @@
   Детальная страница
 {% endblock %}
 {% block content %}
-<div class="container">
-    <main>
-      <div class="py-5 text-center">
+    <main style="
+    height: 90vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;">
+    <div>
+      <div class="text-center">
         <h2>Форма регистрации</h2>
         <p class="lead">Регистрируясь в нашем приложении, вы соглашаетесь на обработку данных.</p>
       </div>
@@ -71,8 +76,8 @@
         <hr class="my-4" />
         <button class="w-100 btn btn-lg" type="submit">Зарегистрироваться</button>
       </form>
+    </div>
     </main>
-  </div>
   
   <link rel="stylesheet" type="text/css" href="{% static 'css/registration.css' %}" />
 {% endblock %}

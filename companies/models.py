@@ -1,8 +1,9 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import MinValueValidator, MaxValueValidator
-from users.models import User
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 class Company(models.Model):
     owner = models.OneToOneField(

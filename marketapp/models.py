@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
-
+from companies.models import Company
 
 User = get_user_model()
 
@@ -12,51 +12,42 @@ class SmartPhone(models.Model):
         ('Approved', 'Одобрено'),
         ('Rejected', 'Отклонено'),
     )
-
     brand = models.CharField(
         'Бренд', max_length=100
     )
-
     model = models.CharField(
         'Модель', max_length=100
     )
-
     display_size = models.DecimalField(
         'Размер экрана', max_digits=5,
         decimal_places=2
     )
-
     storage_capacity = models.PositiveIntegerField(
         'Объем встроенной памяти'
     )
-
-    likes_count = models.PositiveIntegerField(default=0)
-
+    likes_count = models.PositiveIntegerField(
+        default=0
+    )
     seller = models.ForeignKey(
-        User,
+        Company,
         on_delete=models.CASCADE,
         verbose_name='Продавец',
         blank=True,
         null=True
     )
-
     processor = models.CharField(
         'Процессор', max_length=200
     )
-
     battery_capacity = models.PositiveIntegerField(
         'Объем батареи'
     )
-
     description = models.TextField(
         'Описание, характеристики'
     )
-
     created_at = models.DateTimeField(
         'Дата добавления',
         auto_now_add=True
     )
-
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES,
         default='Pending'
@@ -67,11 +58,9 @@ class SmartPhone(models.Model):
         null=True,
         blank=True
     )
-
     price = models.DecimalField(
         'Цена', max_digits=10, decimal_places=2
     )
-
     grade = models.DecimalField(
         'Оценка',
         max_digits=3,

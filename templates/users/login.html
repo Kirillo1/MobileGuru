@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
   <div class="form-signin">
+    <div>
     <h1 class="h3 mb-3 fw-normal">Введите данные для входа</h1>
     <form method='POST'>
       {% csrf_token %}
@@ -20,5 +21,6 @@
       <button class="btn w-100 py-2" type="submit">Войти</button>
     </form>
   </div>
+</div>
   <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
 {% endblock %}

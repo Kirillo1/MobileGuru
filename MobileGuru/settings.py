@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'comments',
     'users',
     'companies',
+    'orders',
     'phonenumber_field',
 ]
 

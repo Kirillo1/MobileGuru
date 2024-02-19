@@ -24,7 +24,8 @@ urlpatterns = [
     path('', include('marketapp.urls', namespace='market')),
     path('users/', include('users.urls', namespace='users')),
     path('comments/', include('comments.urls', namespace='comments')),
-    path('company/', include('companies.urls', namespace='companies'))
+    path('company/', include('companies.urls', namespace='companies')),
+    path('order/', include('orders.urls', namespace='orders'))
 ]
 
 if settings.DEBUG:

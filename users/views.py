@@ -66,7 +66,7 @@ def register_user(request):
             form.instance.image = main_image
             user = form.save()
             login(request, user)
-            return redirect('market:index')
+            return redirect('companies:register_company')
         else:
             for field, errors in form.errors.items():
                 print(f"Field: {field}, Errors: {', '.join(errors)}")
