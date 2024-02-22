@@ -64,6 +64,11 @@ class OrderSmartphone(models.Model):
 
 
 class Basket(models.Model):
+    user_name = models.ForeignKey(
+        User, related_name="basket", 
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь"
+    )
     smartphone = models.ForeignKey(
         SmartPhone, 
         on_delete=models.CASCADE,
