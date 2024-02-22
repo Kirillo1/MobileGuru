@@ -4,6 +4,8 @@
   Детальная страница
 {% endblock %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail_phone.css' %}" />
+
   <main>
     <h1 class="text-body-emphasis">{{ smartphone.brand }} {{ smartphone.model }}</h1>
     <p class="fs-5 W-80">Quickly and easily get started with Bootstrap's compiled, production-ready files with this barebones example featuring some basic HTML and helpful links. Download all our examples to get started.</p>
@@ -38,7 +40,7 @@
         <p>Оценка: {{ smartphone.grade }}</p>
       </div>
       <div class="col-sm-6">
-        <a href="#" class="btn btn-primary btn-lg px-4 text-end">Купить</a>
+        <a href="#" id="addToBasket" data-smartphone-id="{{ smartphone.pk }}" class="btn btn-primary btn-lg px-4 text-end">Купить</a>
       </div>
     </div>
     {% if user.is_authenticated %}
@@ -67,6 +69,39 @@
 
   {% endfor %}
 </div>
+<script>
+  const addToBasket = document.getElementById('addToBasket');
+  addToBasket.addEventListener("click", addPhoneTobasket)
+  
+  function addPhoneTobasket() {
+      const smartphoneId = this.getAttribute('data-smartphone-id'); // Получаем ID смартфона
+      $.ajax({
+          url: '/orders/add_to_basket/',
+          method: 'POST',
+          data: {"smartphone_id": smartphoneId, "status": 'ok'}, // Передаем ID смартфона
+          headers: {
+              "X-CSRFToken": getCookie("csrftoken")
+          },
+      })
+  }
+  
 
-  <link rel="stylesheet" type="text/css" href="{% static 'css/detail_phone.css' %}" />
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + "=")) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
+
+</script>
+
 {% endblock %}
