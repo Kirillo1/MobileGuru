@@ -40,7 +40,9 @@
         <p>Оценка: {{ smartphone.grade }}</p>
       </div>
       <div class="col-sm-6">
-        <a href="#" id="addToBasket" data-smartphone-id="{{ smartphone.pk }}" class="btn btn-primary btn-lg px-4 text-end">Купить</a>
+        <button type="button" class="btn btn-primary btn-lg px-4 text-end" data-bs-toggle="modal" data-bs-target="#basketModal">
+          Добавить в корзину
+        </button>
       </div>
     </div>
     {% if user.is_authenticated %}
@@ -49,6 +51,22 @@
       <a href="{% url 'market:smartphone_edit' smartphone.pk %}">Edit</a>
     {% endif %}
   </main>
+
+  <div class="modal fade" id="basketModal" tabindex="-1" aria-labelledby="basketModalLable" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content align-items-center bg-dark" id="basketModalBRClass">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Количество</h1>
+          </div>
+            <div class="modal-body">
+                <div class="text-center">
+                  <input type="number" id="productQuantity" class="form-control" style="max-width: 100px;" value="1">
+                  <button id="addToBasket" data-smartphone-id="{{ smartphone.pk }}" type="button" class="btn btn-secondary mt-3">Добавить</button>
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
 
 
   {% if user.is_authenticated %}
@@ -69,20 +87,30 @@
 
   {% endfor %}
 </div>
+
 <script>
   const addToBasket = document.getElementById('addToBasket');
+  const productQuantity = document.getElementById('productQuantity');
+  const basketModal = document.getElementById('basketModalBRClass');
+  const myModalEl = document.getElementById('basketModal')
+
   addToBasket.addEventListener("click", addPhoneTobasket)
+
+  myModalEl.addEventListener('hidden.bs.modal', event => {
+    basketModal.classList = "modal-content align-items-center bg-dark";
+  })
   
   function addPhoneTobasket() {
-      const smartphoneId = this.getAttribute('data-smartphone-id'); // Получаем ID смартфона
+      const smartphoneId = this.getAttribute('data-smartphone-id');
       $.ajax({
           url: '/orders/add_to_basket/',
           method: 'POST',
-          data: {"smartphone_id": smartphoneId, "status": 'ok'}, // Передаем ID смартфона
+          data: {"smartphone_id": smartphoneId, "productQuantity": productQuantity.value},
           headers: {
               "X-CSRFToken": getCookie("csrftoken")
           },
       })
+      basketModal.classList.add('border', 'border-2', 'border-success');
   }
   
 

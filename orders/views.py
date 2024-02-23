@@ -16,13 +16,14 @@ def add_to_basket(request):
         raise Http404
 
     smartphone_id = request.POST.get('smartphone_id')
+    quantity = request.POST.get('productQuantity')
     smartphone = SmartPhone.objects.get(id=smartphone_id)
     user = request.user
     new_basket = Basket.objects.create(user_name=user,
                                     smartphone=smartphone,
-                                    quantity=1
+                                    quantity=quantity
                                     )
     print(new_basket.id)
-    status = request.POST.get('status')
+    print(quantity)
 
     return JsonResponse({'status': 'ok'})
