@@ -40,7 +40,9 @@
         <p>Оценка: {{ smartphone.grade }}</p>
       </div>
       <div class="col-sm-6">
-        <a href="#" id="addToBasket" data-smartphone-id="{{ smartphone.pk }}" class="btn btn-primary btn-lg px-4 text-end">Купить</a>
+        <button type="button" class="btn btn-primary btn-lg px-4 text-end" data-bs-toggle="modal" data-bs-target="#basketModal">
+          Добавить в корзину
+        </button>
       </div>
     </div>
     {% if user.is_authenticated %}
@@ -50,12 +52,22 @@
     {% endif %}
   </main>
 
-
-  {% if user.is_authenticated %}
-  <div>
-    <a href="{% url 'comments:create_comment' smartphone.pk %}">Добавить комментарий</a>
+  <div class="modal fade" id="basketModal" tabindex="-1" aria-labelledby="basketModalLable" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content align-items-center bg-dark" id="basketModalBRClass">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Количество</h1>
+          </div>
+            <div class="modal-body">
+                <div class="text-center">
+                  <input type="number" id="productQuantity" class="form-control" style="max-width: 100px;" value="1">
+                  <button id="addToBasket" data-smartphone-id="{{ smartphone.pk }}" type="button" class="btn btn-secondary mt-3">Добавить</button>
+                </div>
+            </div>
+      </div>
+    </div>
   </div>
-{% endif %}
+
 <div style="margin-bottom: 300px;">
   {% for comment in comments %}
     {{ comment.author }}
@@ -63,45 +75,22 @@
     {{ comment.created_at }}
 
     {% if user == comment.author %}
-    <a href="{% url 'comments:delete_comment' comment.pk %}">Delete comment</a>
+    <button id="deleteCommentBtn_{{ comment.pk }}" data-comment-id="{{ comment.pk }}" type="button" class="btn btn-secondary mt-3 delete-comment-btn">Удалить</button>
     <a href="{% url 'comments:edit_comment' comment.pk %}">Edit comment</a>
     {% endif %}
 
   {% endfor %}
+  {% if user.is_authenticated %}
+  <div class="input-group" id="inputCommentDiv">
+    <span class="input-group-text">Написать отзыв</span>
+    <textarea class="form-control" aria-label="With textarea" id="commentData"></textarea>
+  </div>
+  <div>
+    <button id="addCommentBtn" data-smartphone-id="{{ smartphone.pk }}" type="button" class="btn btn-secondary mt-3">Добавить</button>
+  </div>
+{% endif %}
 </div>
-<script>
-  const addToBasket = document.getElementById('addToBasket');
-  addToBasket.addEventListener("click", addPhoneTobasket)
-  
-  function addPhoneTobasket() {
-      const smartphoneId = this.getAttribute('data-smartphone-id'); // Получаем ID смартфона
-      $.ajax({
-          url: '/orders/add_to_basket/',
-          method: 'POST',
-          data: {"smartphone_id": smartphoneId, "status": 'ok'}, // Передаем ID смартфона
-          headers: {
-              "X-CSRFToken": getCookie("csrftoken")
-          },
-      })
-  }
-  
 
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-      const cookies = document.cookie.split(";");
-      for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === (name + "=")) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-          }
-      }
-  }
-  return cookieValue;
-}
-
-
-</script>
+<script src="{% static 'js/detailPhone.js' %}"></script>
 
 {% endblock %}

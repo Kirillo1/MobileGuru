@@ -33,7 +33,8 @@ class Comment(models.Model):
         null=True
     )
     content = models.TextField(
-        "Контент"
+        "Контент",
+        blank=False
     )
     created_at = models.DateTimeField(
         'Дата добавления',
