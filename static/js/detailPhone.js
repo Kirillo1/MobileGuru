@@ -2,8 +2,10 @@ const addToBasket = document.getElementById('addToBasket');
 const productQuantity = document.getElementById('productQuantity');
 const basketModal = document.getElementById('basketModalBRClass');
 const myModalEl = document.getElementById('basketModal')
+const addCommentBtn = document.getElementById('addCommentBtn');
 
 addToBasket.addEventListener("click", addPhoneTobasket)
+addCommentBtn.addEventListener("click", addCommentToPhone)
 
 myModalEl.addEventListener('hidden.bs.modal', event => {
 basketModal.classList = "modal-content align-items-center bg-dark";
@@ -27,6 +29,28 @@ function addPhoneTobasket() {
     });
 }
 
+
+function addCommentToPhone(){
+    const smartphoneId = this.getAttribute('data-smartphone-id');
+    const textInput = document.getElementById('commentData').value;
+    const inputCommentDiv = document.getElementById('inputCommentDiv');
+    if (textInput.length > 0) {
+        $.ajax({
+            url: '/comments/create_comment/',
+            method: 'POST',
+            data: {"smartphone_id": smartphoneId, "text_comment": textInput},
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                inputCommentDiv.classList.add('border', 'rounded', 'border-3', 'border-danger');
+            }
+        });
+    }
+}
 
 
 function getCookie(name) {

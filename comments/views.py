@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import (Http404, HttpResponse, HttpResponseRedirect,
+                         JsonResponse)
 
 from comments.forms import CommentForm
 from marketapp.models import SmartPhone
@@ -9,23 +11,21 @@ from .models import Comment
 
 
 @login_required
-def create_comment_smarphone_view(request, pk):
-    smartphone = SmartPhone.objects.get(pk=pk)
+def create_comment_smarphone_view(request):
+    if request.method != 'POST':
+        raise Http404
 
-    if request.method == 'POST':
-        user = request.user
-        form = CommentForm(request.POST)
+    smartphone_id = request.POST.get('smartphone_id')
+    text_comment = request.POST.get('text_comment')
+    user = request.user
+    
+    smartphone = SmartPhone.objects.get(id=smartphone_id)
+    new_comment = Comment.objects.create(smartphone=smartphone,
+                                        author=user,
+                                        content=text_comment)
 
-        if form.is_valid():
-            form.instance.smartphone = smartphone
-            form.instance.author = user
-            form.save()
+    return JsonResponse({'status': 'ok'})
 
-            return redirect('market:index')
-    else:
-        form = CommentForm()
-        
-    return render(request, 'comments/create_view.html', {'form': form})
 
 
 @login_required

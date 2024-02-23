@@ -68,12 +68,6 @@
     </div>
   </div>
 
-
-  {% if user.is_authenticated %}
-  <div>
-    <a href="{% url 'comments:create_comment' smartphone.pk %}">Добавить комментарий</a>
-  </div>
-{% endif %}
 <div style="margin-bottom: 300px;">
   {% for comment in comments %}
     {{ comment.author }}
@@ -86,6 +80,15 @@
     {% endif %}
 
   {% endfor %}
+  {% if user.is_authenticated %}
+  <div class="input-group" id="inputCommentDiv">
+    <span class="input-group-text">Написать отзыв</span>
+    <textarea class="form-control" aria-label="With textarea" id="commentData"></textarea>
+  </div>
+  <div>
+    <button id="addCommentBtn" data-smartphone-id="{{ smartphone.pk }}" type="button" class="btn btn-secondary mt-3">Добавить</button>
+  </div>
+{% endif %}
 </div>
 
 <script src="{% static 'js/detailPhone.js' %}"></script>
