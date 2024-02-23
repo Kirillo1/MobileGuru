@@ -23,7 +23,5 @@ def add_to_basket(request):
                                     smartphone=smartphone,
                                     quantity=quantity
                                     )
-    print(new_basket.id)
-    print(quantity)
 
     return JsonResponse({'status': 'ok'})
