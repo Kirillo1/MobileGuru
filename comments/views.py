@@ -17,12 +17,13 @@ def create_comment_smarphone_view(request):
 
     smartphone_id = request.POST.get('smartphone_id')
     text_comment = request.POST.get('text_comment')
-    user = request.user
     
     smartphone = SmartPhone.objects.get(id=smartphone_id)
-    new_comment = Comment.objects.create(smartphone=smartphone,
-                                        author=user,
-                                        content=text_comment)
+    Comment.objects.create(
+                        smartphone=smartphone,
+                        author=request.user,
+                        content=text_comment
+                        )
 
     return JsonResponse({'status': 'ok'})
 
@@ -49,14 +50,16 @@ def create_comment_company_view(request, title_hash):
 
 
 @login_required
-def delete_comment_view(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
+def delete_comment_view(request):
+    if request.method != 'POST':
+        raise Http404
 
-    if request.method == 'POST':
-        comment.delete()
-        return redirect('market:index')
-    
-    return render(request, 'comments/delete_view.html', {'comment': comment})
+    comment_id = request.POST.get("comment_id")
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+
+    return JsonResponse({'status': 'ok'})
+
 
 
 @login_required

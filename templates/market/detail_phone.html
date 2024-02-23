@@ -75,7 +75,7 @@
     {{ comment.created_at }}
 
     {% if user == comment.author %}
-    <a href="{% url 'comments:delete_comment' comment.pk %}">Delete comment</a>
+    <button id="deleteCommentBtn_{{ comment.pk }}" data-comment-id="{{ comment.pk }}" type="button" class="btn btn-secondary mt-3 delete-comment-btn">Удалить</button>
     <a href="{% url 'comments:edit_comment' comment.pk %}">Edit comment</a>
     {% endif %}
 
