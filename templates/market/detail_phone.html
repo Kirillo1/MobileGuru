@@ -75,7 +75,11 @@
     {{ comment.created_at }}
 
     {% if user == comment.author %}
-    <button id="deleteCommentBtn_{{ comment.pk }}" data-comment-id="{{ comment.pk }}" type="button" class="btn btn-secondary mt-3 delete-comment-btn">Удалить</button>
+    <form action="{% url 'comments:delete_comment' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="comment_id" value="{{ comment.pk }}">
+      <button type="submit" class="btn btn-secondary">Удалить</button>
+    </form>
     <a href="{% url 'comments:edit_comment' comment.pk %}">Edit comment</a>
     {% endif %}
 
