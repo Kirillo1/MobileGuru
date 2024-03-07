@@ -73,24 +73,31 @@
     </div>
   </div>
 
-  {% if user.is_authenticated %}
-    <div>
-      <a href="{% url 'comments:create_comment_company' company.title_hash %}">Добавить комментарий</a>
-    </div>
-  {% endif %}
-  <div style="">
     {% for comment in comments %}
       {{ comment.author }}
       {{ comment.content }}
       {{ comment.created_at }}
 
       {% if user == comment.author %}
-
-        <a href="{% url 'comments:delete_comment' comment.pk %}">Delete comment</a>
-        <a href="{% url 'comments:edit_comment' comment.pk %}">Edit comment</a>
+      <form action="{% url 'comments:delete_comment_company' company.title_hash %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="comment_id" value="{{ comment.pk }}">
+        <button type="submit" class="btn btn-secondary">Удалить</button>
+      </form>
+      <a href="{% url 'comments:edit_comment' comment.pk %}">Edit comment</a>
       {% endif %}
-
     {% endfor %}
+
+    {% if user.is_authenticated %}
+  <div class="input-group" id="inputCommentDiv">
+    <span class="input-group-text">Написать отзыв</span>
+    <textarea class="form-control" aria-label="With textarea" id="commentData"></textarea>
+  </div>
+  <div>
+    <button id="addCommentBtn" data-company-title="{{ company.title_hash }}" type="button" class="btn btn-secondary mt-3">Добавить</button>
+  </div>
+{% endif %}
+
     <h2 class="pb-2 border-bottom">Все товары от {{ company.company_name }}</h2>
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch">
       {% if smartphones %}
@@ -129,8 +136,8 @@
       </div>
       {% endif %}
 
-    </div>
   </div>
 
-  
+  <script src="{% static 'js/detailCompany.js' %}"></script>
+
 {% endblock %}

@@ -4,8 +4,124 @@
   Мои заказы
 {% endblock %}
 {% block content %}
-   
-{% for basket in baskets %}
-{{ basket }}
-{% endfor %}
+  <div class="container text-center">
+    <div class="row">
+      {% for basket in baskets %}
+        <div class="col">
+          <div class="card mt-5 bg-dark text-white border border-secondary" style="width: 18rem">
+            <img src="{{ basket.smartphone.main_image.url }}" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <p class="card-text">{{ basket.user_name.first_name }} {{ basket.user_name.last_name }}</p>
+              <p class="card-text">{{ basket.smartphone }}</p>
+              <p class="card-text">{{ basket.quantity }}</p>
+              <form action="{% url 'orders:delete_product_basket' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="basket_id" value="{{ basket.pk }}" />
+                <button type="submit" class="btn btn-secondary">Удлить</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="mt-5">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Оформить заказ</button>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content bg-dark">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex justify-content-center">
+          <div class="row g-3">
+            <div class="col-auto">
+              <input type="text" id="inputRegion" class="form-control" placeholder="Регион" />
+            </div>
+            <div class="col-auto">
+              <input type="text" id="inputArea" class="form-control" placeholder="Район" />
+            </div>
+            <div class="col-auto">
+              <input type="text" id="inputCity" class="form-control" placeholder="Город" />
+            </div>
+            <div class="col-auto">
+              <input type="text" id="inputStreet" class="form-control" placeholder="Улица" />
+            </div>
+            <div class="col-auto">
+              <input type="text" id="inputHouse" class="form-control" placeholder="Дом" />
+            </div>
+            <div class="col-auto">
+              <input type="text" id="inputApartment" class="form-control" placeholder="Квартира" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="button" id="saveBtnOrder" class="btn btn-primary">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const saveBtnOrder = document.getElementById('saveBtnOrder')
+    saveBtnOrder.addEventListener('click', saveOrder)
+    
+    function saveOrder() {
+      const region = document.getElementById('inputRegion').value
+      const area = document.getElementById('inputArea').value
+      const city = document.getElementById('inputCity').value
+      const street = document.getElementById('inputStreet').value
+      const house = document.getElementById('inputHouse').value
+      const apartment = document.getElementById('inputApartment').value
+    
+      const data = {
+        region: region,
+        area: area,
+        city: city,
+        street: street,
+        house: house,
+        apartment: apartment
+      }
+    
+      fetch('/orders/create_order/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify(data)
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok')
+          }
+          return response.json()
+        })
+        .then((data) => {
+          console.log('Data sent successfully:', data)
+          $('#exampleModal').modal('hide')
+        })
+        .catch((error) => {
+          console.error('There was a problem with your fetch operation:', error)
+        })
+    }
+    
+    function getCookie(name) {
+      let cookieValue = null
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';')
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim()
+          if (cookie.substring(0, name.length + 1) === name + '=') {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+            break
+          }
+        }
+      }
+      return cookieValue
+    }
+  </script>
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import (Http404, HttpResponse, HttpResponseRedirect,
@@ -28,38 +28,48 @@ def create_comment_smarphone_view(request):
     return JsonResponse({'status': 'ok'})
 
 
-
 @login_required
-def create_comment_company_view(request, title_hash):
+def create_comment_company_view(request):
+    if request.method != 'POST':
+        raise Http404
+
+    text_comment = request.POST.get('text_comment')
+    title_hash = request.POST.get('title_hash')
+    print(title_hash)
+    
     company = Company.objects.get(title_hash=title_hash)
+    Comment.objects.create(
+                        company=company,
+                        author=request.user,
+                        content=text_comment
+                        )
 
-    if request.method == 'POST':
-        user = request.user
-        form = CommentForm(request.POST)
-
-        if form.is_valid():
-            form.instance.company = company
-            form.instance.author = user
-            form.save()
-
-            return redirect('market:index')
-    else:
-        form = CommentForm()
-        
-    return render(request, 'comments/create_view.html', {'form': form})
+    return JsonResponse({'status': 'ok'})
 
 
 @login_required
 def delete_comment_view(request):
-    if request.method != 'POST':
-        raise Http404
+    if request.method == 'POST':
+        comment_id = request.POST.get('comment_id')
+        try:
+            comment = Comment.objects.get(pk=comment_id)
+            smartphone_id = comment.smartphone.id
+            comment.delete()
+        except Comment.DoesNotExist:
+            pass
+    return HttpResponseRedirect(reverse('market:detail_phone', kwargs={'smartphone_id': smartphone_id}))
 
-    comment_id = request.POST.get("comment_id")
-    comment = Comment.objects.get(id=comment_id)
-    comment.delete()
 
-    return JsonResponse({'status': 'ok'})
-
+@login_required
+def delete_comment_company_view(request, title_hash):
+    if request.method == 'POST':
+        comment_id = request.POST.get('comment_id')
+        try:
+            comment = Comment.objects.get(pk=comment_id)
+            comment.delete()
+        except Comment.DoesNotExist:
+            pass
+    return HttpResponseRedirect(reverse('companies:detail_company', kwargs={'title_hash': title_hash}))
 
 
 @login_required
