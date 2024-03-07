@@ -13,15 +13,26 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Пользователь"
     )
-    phone_number = PhoneNumberField(
-        'Номер телефона',
-        unique=False,
-    )
-    address = models.CharField(
-        'Адрес',
+
+    region = models.CharField(
+        'Регион',
         max_length=100, 
-        null=False, 
-        blank=False
+    )
+    area = models.CharField(
+        'Район',
+        max_length=100, 
+    )
+    city = models.CharField(
+        'Город',
+        max_length=100, 
+    )
+    house = models.CharField(
+        'Дом',
+        max_length=100, 
+    )
+    apartment = models.CharField(
+        'Квартира',
+        max_length=100, 
     )
     date_of_creation = models.DateTimeField(
         'Дата создания', 

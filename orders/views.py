@@ -21,9 +21,9 @@ def add_to_basket(request):
     smartphone = SmartPhone.objects.get(id=smartphone_id)
     user = request.user
     Basket.objects.create(user_name=user,
-                        smartphone=smartphone,
-                        quantity=quantity
-                        )
+                          smartphone=smartphone,
+                          quantity=quantity
+                          )
 
     return JsonResponse({'status': 'ok'})
 
@@ -45,7 +45,7 @@ def create_order_view(request):
 
     if request.method == 'POST':
         data = json.loads(request.body)
-        
+
         region = data.get('region')
         area = data.get('area')
         city = data.get('city')
@@ -59,9 +59,6 @@ def create_order_view(request):
         print(house)
         print(apartment)
 
-        
-        
         return JsonResponse({'status': 'ok', 'data_received': data})
-    
-    return JsonResponse({'error': 'Method not allowed'}, status=405)
 
+    return JsonResponse({'error': 'Method not allowed'}, status=405)
