@@ -1,48 +1,20 @@
-const addToBasket = document.getElementById('addToBasket');
-const productQuantity = document.getElementById('productQuantity');
-const basketModal = document.getElementById('basketModalBRClass');
-const myModalEl = document.getElementById('basketModal');
 const addCommentBtn = document.getElementById('addCommentBtn');
 
-addToBasket.addEventListener("click", addPhoneToBasket)
 
 if (addCommentBtn) {
     addCommentBtn.addEventListener("click", addPhoneComment)
 }
 
-myModalEl.addEventListener('hidden.bs.modal', event => {
-basketModal.classList = "modal-content align-items-center bg-dark";
-})
-
-
-function addPhoneToBasket() {
-    const smartphoneId = this.getAttribute('data-smartphone-id');
-    $.ajax({
-        url: '/orders/add_to_basket/',
-        method: 'POST',
-        data: {"smartphone_id": smartphoneId, "productQuantity": productQuantity.value},
-        headers: {
-            "X-CSRFToken": getCookie("csrftoken")
-        },
-        success: function(response) {
-            basketModal.classList.add('border', 'border-2', 'border-success');
-        },
-        error: function(xhr, textStatus, errorThrown) {
-            basketModal.classList.add('border', 'border-2', 'border-danger');
-        }
-    });
-}
-
 
 function addPhoneComment(){
-    const smartphoneId = this.getAttribute('data-smartphone-id');
+    const company_title = this.getAttribute('data-company-title');
     const textInput = document.getElementById('commentData').value;
     const inputCommentDiv = document.getElementById('inputCommentDiv');
     if (textInput.length > 0) {
         $.ajax({
-            url: '/comments/create_comment/',
+            url: '/comments/create_comment_company/',
             method: 'POST',
-            data: {"smartphone_id": smartphoneId, "text_comment": textInput},
+            data: {"title_hash": company_title, "text_comment": textInput},
             headers: {
                 "X-CSRFToken": getCookie("csrftoken")
             },
@@ -70,3 +42,4 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
