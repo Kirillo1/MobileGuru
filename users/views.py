@@ -61,7 +61,7 @@ def view_logout(request: HttpRequest) -> HttpResponse:
     return HttpResponseRedirect(reverse('market:index'))
 
 
-def view_register_user(request: HttpRequest) -> HttpRequest:
+def view_register_user(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():

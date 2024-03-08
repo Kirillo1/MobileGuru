@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from phonenumber_field.modelfields import PhoneNumberField
+
 from marketapp.models import SmartPhone
 
 
@@ -9,39 +9,38 @@ User = get_user_model()
 
 class Order(models.Model):
     user_name = models.ForeignKey(
-        User, related_name="orders", 
+        User, related_name="orders",
         on_delete=models.CASCADE,
         verbose_name="Пользователь"
     )
-
     region = models.CharField(
         'Регион',
-        max_length=100, 
+        max_length=100,
     )
     area = models.CharField(
         'Район',
-        max_length=100, 
+        max_length=100,
     )
     city = models.CharField(
         'Город',
-        max_length=100, 
+        max_length=100,
     )
     house = models.CharField(
         'Дом',
-        max_length=100, 
+        max_length=100,
     )
     apartment = models.CharField(
         'Квартира',
-        max_length=100, 
+        max_length=100,
     )
     date_of_creation = models.DateTimeField(
-        'Дата создания', 
+        'Дата создания',
         auto_now_add=True
     )
     smartphones = models.ManyToManyField(
-        SmartPhone, 
+        SmartPhone,
         verbose_name="Смартфоны",
-        through='orders.OrderSmartphone', 
+        through='orders.OrderSmartphone',
         through_fields=['order', 'smartphone']
     )
 
@@ -52,17 +51,17 @@ class Order(models.Model):
 
 class OrderSmartphone(models.Model):
     smartphone = models.ForeignKey(
-        SmartPhone, 
+        SmartPhone,
         on_delete=models.CASCADE,
         verbose_name='Смартфон'
     )
     order = models.ForeignKey(
-        Order, 
-        verbose_name='Заказ', 
+        Order,
+        verbose_name='Заказ',
         on_delete=models.CASCADE
     )
     quantity = models.PositiveIntegerField(
-        verbose_name="Количество", 
+        verbose_name="Количество",
         default=1
     )
 
@@ -76,17 +75,17 @@ class OrderSmartphone(models.Model):
 
 class Basket(models.Model):
     user_name = models.ForeignKey(
-        User, related_name="basket", 
+        User, related_name="basket",
         on_delete=models.CASCADE,
         verbose_name="Пользователь"
     )
     smartphone = models.ForeignKey(
-        SmartPhone, 
+        SmartPhone,
         on_delete=models.CASCADE,
         verbose_name="Смартфон"
     )
     quantity = models.PositiveIntegerField(
-        verbose_name="Количество", 
+        verbose_name="Количество",
         default=1
     )
 
@@ -96,4 +95,3 @@ class Basket(models.Model):
     class Meta:
         verbose_name = 'Корзина'
         verbose_name_plural = 'Корзины'
-
