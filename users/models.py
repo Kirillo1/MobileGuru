@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from phonenumber_field.modelfields import PhoneNumberField
 
-from django.contrib.auth.models import AbstractUser
-from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -27,9 +24,10 @@ class User(AbstractUser):
         upload_to='users_images',
         blank=True
     )
-    
-    groups_user = models.ManyToManyField('auth.Group', related_name='user_set_custom')
-
+    groups_user = models.ManyToManyField(
+        'auth.Group', 
+        related_name='user_set_custom'
+    )
 
     class Meta:
         verbose_name = 'Пользователь'
