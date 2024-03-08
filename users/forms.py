@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
-from .models import User
 from django import forms
+
+from .models import User
+
 from phonenumber_field.formfields import PhoneNumberField
 
 
@@ -25,15 +27,21 @@ class UserLoginForm(AuthenticationForm):
 class UserProfileForm(UserChangeForm):
     username = forms.CharField(
         widget=forms.TextInput(attrs={'read_only': True}))
-    phone_number = PhoneNumberField(widget=forms.TextInput(attrs={'placeholder': 'Ваш номер телефона'}))
-    email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Ваша электронная почта'}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ваше имя'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ваша фамилия'}))
-    father_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ваше отчество'}))
+    phone_number = PhoneNumberField(widget=forms.TextInput(
+        attrs={'placeholder': 'Ваш номер телефона'}))
+    email = forms.CharField(widget=forms.EmailInput(
+        attrs={'placeholder': 'Ваша электронная почта'}))
+    first_name = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Ваше имя'}))
+    last_name = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'Ваша фамилия'}))
+    father_name = forms.CharField(widget=forms.TextInput(
+        attrs={'placeholder': 'Ваше отчество'}))
 
     class Meta:
         model = User
-        fields = ('username', 'phone_number', 'email', 'first_name', 'last_name', 'father_name', 'image')
+        fields = ('username', 'phone_number', 'email',
+                  'first_name', 'last_name', 'father_name', 'image')
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
@@ -49,13 +57,15 @@ class AvatarUserForm(forms.ModelForm):
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
-    confirm_password = forms.CharField(label='Подтвердите пароль', widget=forms.PasswordInput)
+    confirm_password = forms.CharField(
+        label='Подтвердите пароль', widget=forms.PasswordInput)
     image = forms.ImageField(label='Ваш лого', required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'phone_number', 'email', 'first_name', 'last_name', 'father_name', 'image')
-    
+        fields = ('username', 'phone_number', 'email',
+                  'first_name', 'last_name', 'father_name', 'image')
+
     def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
 
@@ -68,7 +78,6 @@ class UserRegistrationForm(forms.ModelForm):
         self.fields['image'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
         self.fields['confirm_password'].widget.attrs['class'] = 'form-control'
-
 
     def clean_confirm_password(self):
         password = self.cleaned_data.get('password')
